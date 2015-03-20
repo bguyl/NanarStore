@@ -8,7 +8,7 @@
     <p>{{ article.description }}</p>
 	<p>{{ article.categorie }}</p>
 	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
-	<p>{{ article.price }}</p>
+	<p class="label label-primary"><br/> {{article.price}}€ </p>
     <h3>Comments</h3>
     {% for comment in comments %}
         <strong>{{ comment.author }}</strong> said :  {{ comment.content }}<br>
