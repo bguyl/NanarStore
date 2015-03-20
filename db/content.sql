@@ -1,9 +1,9 @@
 insert into t_article values
-(1, 'Hitman le Cobra', 'Best nanar ever!', 'Action', 'img/hitman.jpg', 9.99);
+(1, 'Hitman le Cobra', 'Best nanar ever!', 'Action', 'hitman.jpg', 9.99);
 insert into t_article values
-(2, 'AlphaForce', 'Random name!', 'Action', 'img/alpha.jpg', 0.99);
+(2, 'AlphaForce', 'Random name!', 'Action', 'alpha.jpg', 0.99);
 insert into t_article values
-(3, 'Turkish Star Wars', 'Epic!', 'Science-fiction', 'img/turkish.jpg', 199.99);
+(3, 'Turkish Star Wars', 'Epic!', 'Science-fiction', 'turkish.jpg', 199.99);
 
 insert into t_comment values
 (1, 'Dangerous Pikachu', 'Le film de toute une vie', 14, 1);

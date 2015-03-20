@@ -7,7 +7,7 @@
     <h2>{{ article.title }}</h2>
     <p>{{ article.description }}</p>
 	<p>{{ article.categorie }}</p>
-	<img src = '{{article.image}}'/>
+	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
 	<p>{{ article.price }}</p>
     <h3>Comments</h3>
     {% for comment in comments %}
