@@ -14,6 +14,12 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 // Register services.
-$app['dao.article'] = $app->share(function ($app) {
+$app['dao.article'] = $app->share(function($app) {
     return new NanarStore\DAO\ArticleDAO($app['db']);
+});
+	
+$app['dao.comment'] = $app->share(function($app) {
+    $commentDAO = new NanarStore\DAO\CommentDAO($app['db']);
+    $commentDAO->setArticleDAO($app['dao.article']);
+    return $commentDAO;
 });

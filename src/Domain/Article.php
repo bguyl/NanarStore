@@ -31,6 +31,20 @@ class Article
      * @var string
      */
     private $categorie;
+	
+	/**
+     * Article image.
+     *
+     * @var string
+     */
+	private $image;
+	
+	/**
+     * Article price.
+     *
+     * @var string
+     */
+	private $price;
 
     public function getId() {
         return $this->id;
@@ -63,4 +77,20 @@ class Article
     public function setCategorie($cat) {
         $this->categorie = $cat;
     }
+	
+	public function getImage() {
+		return $this->image;
+	}
+	
+	public function setImage($img){
+		$this->image = $img;
+	}
+	
+	public function getPrice() {
+		return $this->price;
+	}
+	
+	public function setPrice($price){
+		$this->price = $price;
+	}
 }

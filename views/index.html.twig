@@ -1,23 +1,15 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <link href="nanarstore.css" rel="stylesheet" />
-    <title>MicroCMS - Home</title>
-</head>
-<body>
-    <header>
-        <h1>NanarStore</h1>
-    </header>
-    {% for article in articles %}
-    <article>
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.description }}</p>
-		<p>{{ article.categorie }}</p>
-    </article>
-    {% endfor %}
-    <footer class="footer">
-        <a href="https://github.com/bpesquet/OC-MicroCMS">MicroCMS</a> is a minimalistic CMS built as a showcase for modern PHP development.
-    </footer>
-</body>
-</html>
+{% extends "layout.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% for article in articles %}
+<article>
+    <h2><a class="articleTitle" href="/article/{{ article.id }}">{{ article.title }}</a></h2>
+    <p>{{ article.description }}</p>
+	<p>{{ article.categorie }}</p>
+	<img src = '{{article.image}}'/>
+	<p class="label label-primary"><br/> {{article.price}}€ </p>
+</article>
+{% endfor %}
+{% endblock %}
