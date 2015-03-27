@@ -43,3 +43,7 @@ $app['dao.comment'] = $app->share(function($app) {
 	$commentDAO->setUserDAO($app['dao.user']);
     return $commentDAO;
 });
+
+$app['dao.category'] = $app->share(function($app) {
+    return new NanarStore\DAO\CategoryDAO($app['db']);
+});
