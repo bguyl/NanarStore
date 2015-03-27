@@ -41,7 +41,41 @@ class ArticleDAO extends DAO
             throw new \Exception("No article matching id " . $id);
     }
 	
-	
+	/**
+     * Saves an article into the database.
+     *
+     * @param \NanarStore\Domain\Article $article The article to save
+     */
+    public function save(Article $article) {
+        $articleData = array(
+            'art_title' => $article->getTitle(),
+            'art_description' => $article->getDescription(),
+			'art_category' => $article->getCategory(),
+			'art_image' => $article->getImage(),
+			'art_price' => $article->getPrice(),
+            );
+
+        if ($article->getId()) {
+            // The article has already been saved : update it
+            $this->getDb()->update('t_article', $articleData, array('art_id' => $article->getId()));
+        } else {
+            // The article has never been saved : insert it
+            $this->getDb()->insert('t_article', $articleData);
+            // Get the id of the newly created article and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $article->setId($id);
+        }
+    }
+
+    /**
+     * Removes an article from the database.
+     *
+     * @param integer $id The article id.
+     */
+    public function delete($id) {
+        // Delete the article
+        $this->getDb()->delete('t_article', array('art_id' => $id));
+    }
 	
     /**
      * Creates an Article object based on a DB row.
