@@ -9,13 +9,15 @@ use NanarStore\Form\Type\ArticleType;
 // Home page
 $app->get('/', function () use ($app) {
     $articles = $app['dao.article']->findAll();
-    return $app['twig']->render('index.html.twig', array('articles' => $articles));
+    $categories = $app['dao.category']->findAll();
+    return $app['twig']->render('index.html.twig', array('articles' => $articles, 'categories' => $categories));
 
 });	
 	
 // Article details with comments
 $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     $article = $app['dao.article']->find($id);
+    $categories = $app['dao.category']->findAll();
     $user = $app['security']->getToken()->getUser();
     $commentFormView = null;
     if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -34,13 +36,16 @@ $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     $comments = $app['dao.comment']->findAllByArticle($id);
     return $app['twig']->render('article.html.twig', array(
         'article' => $article, 
+        'categories' => $categories,
         'comments' => $comments,
         'commentForm' => $commentFormView));
 });
 
 // Login form
 $app->get('/login', function(Request $request) use ($app) {
+    $categories = $app['dao.category']->findAll();
     return $app['twig']->render('login.html.twig', array(
+        'categories' => $categories,
         'error'         => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
     ));
@@ -49,10 +54,12 @@ $app->get('/login', function(Request $request) use ($app) {
 
 // Admin home page
 $app->get('/admin', function() use ($app) {
+    $categories = $app['dao.category']->findAll();
     $articles = $app['dao.article']->findAll();
     $comments = $app['dao.comment']->findAll();
     $users = $app['dao.user']->findAll();
     return $app['twig']->render('admin.html.twig', array(
+        'categories' => $categories,
         'articles' => $articles,
         'comments' => $comments,
         'users' => $users));
@@ -60,6 +67,7 @@ $app->get('/admin', function() use ($app) {
 
 // Add a new article
 $app->match('/admin/article/add', function(Request $request) use ($app) {
+    $categories = $app['dao.category']->findAll();
     $article = new Article();
     $articleForm = $app['form.factory']->create(new ArticleType(), $article);
     $articleForm->handleRequest($request);
@@ -68,12 +76,14 @@ $app->match('/admin/article/add', function(Request $request) use ($app) {
         $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
     }
     return $app['twig']->render('article_form.html.twig', array(
+        'categories' => $categories,
         'title' => 'New article',
         'articleForm' => $articleForm->createView()));
 });
 
 // Edit an existing article
 $app->match('/admin/article/{id}/edit', function($id, Request $request) use ($app) {
+    $categories = $app['dao.category']->findAll();
     $article = $app['dao.article']->find($id);
     $articleForm = $app['form.factory']->create(new ArticleType(), $article);
     $articleForm->handleRequest($request);
@@ -82,6 +92,7 @@ $app->match('/admin/article/{id}/edit', function($id, Request $request) use ($ap
         $app['session']->getFlashBag()->add('success', 'The article was succesfully updated.');
     }
     return $app['twig']->render('article_form.html.twig', array(
+        'categories' => $categories,
         'title' => 'Edit article',
         'articleForm' => $articleForm->createView()));
 });
