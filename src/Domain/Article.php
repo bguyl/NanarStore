@@ -26,11 +26,11 @@ class Article
     private $description;
 	
 	/**
-     * Article categorie.
+     * Article category.
      *
      * @var string
      */
-    private $categorie;
+    private $category;
 	
 	/**
      * Article image.
@@ -70,12 +70,12 @@ class Article
         $this->description = $desc;
     }
 	
-	public function getCategorie() {
-        return $this->categorie;
+	public function getCategory() {
+        return $this->category;
     }
 
-    public function setCategorie($cat) {
-        $this->categorie = $cat;
+    public function setCategory($cat) {
+        $this->category = $cat;
     }
 	
 	public function getImage() {

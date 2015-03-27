@@ -26,11 +26,11 @@ class Comment
     private $content;
 	
 	/**
-     * Comment note.
+     * Comment grade.
      *
      * @var integer
      */
-    private $note;
+    private $grade;
 
     /**
      * Associated article.
@@ -63,12 +63,12 @@ class Comment
         $this->content = $content;
     }
 	
-	public function getNote() {
-        return $this->note;
+	public function getGrade() {
+        return $this->grade;
     }
 
-    public function setNote($note) {
-        $this->note = $note;
+    public function setGrade($grade) {
+        $this->grade = $grade;
     }
 
     public function getArticle() {

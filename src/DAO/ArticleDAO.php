@@ -54,7 +54,7 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setDescription($row['art_description']);
-		$article->setCategorie($row['art_categorie']);
+		$article->setCategory($row['art_category']);
 		$article->setImage($row['art_image']);
 		$article->setPrice($row['art_price']);
         return $article;
@@ -71,7 +71,7 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setDescription($row['art_description']);
-		$article->setCategorie($row['art_categorie']);
+		$article->setCategory($row['art_category']);
 		$article->setImage($row['art_image']);
 		$article->setPrice($row['art_price']);
         return $article;

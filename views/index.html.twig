@@ -7,7 +7,7 @@
 <article>
     <h2><a class="articleTitle" href="/article/{{ article.id }}">{{ article.title }}</a></h2>
     <p>{{ article.description }}</p>
-	<p>{{ article.categorie }}</p>
+	<p>{{ article.category }}</p>
 	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
 	<p class="label label-primary"><br/> {{article.price}}€ </p>
 </article>
