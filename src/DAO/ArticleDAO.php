@@ -48,7 +48,7 @@ class ArticleDAO extends DAO
       *
       * @return \NanarStore\Domain\Article|throws an exception if no matching article is found
       */
-    public funtion findByCategory($name){
+    public function findByCategory($name){
       $sql = "select * from t_article where art_category=?";
       $result = $this->getDb()->fetchAll($sql, array($name));
 
