@@ -12,8 +12,8 @@ $app->get('/', function () use ($app) {
     $categories = $app['dao.category']->findAll();
     return $app['twig']->render('index.html.twig', array('articles' => $articles, 'categories' => $categories));
 
-});	
-	
+});
+
 // Article details with comments
 $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     $article = $app['dao.article']->find($id);
@@ -35,7 +35,7 @@ $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     }
     $comments = $app['dao.comment']->findAllByArticle($id);
     return $app['twig']->render('article.html.twig', array(
-        'article' => $article, 
+        'article' => $article,
         'categories' => $categories,
         'comments' => $comments,
         'commentForm' => $commentFormView));
@@ -105,4 +105,15 @@ $app->get('/admin/article/{id}/delete', function($id, Request $request) use ($ap
     $app['dao.article']->delete($id);
     $app['session']->getFlashBag()->add('success', 'The article was succesfully removed.');
     return $app->redirect('/admin');
+});
+
+
+// Categore page
+$app->get('/category/{name}', function($name, Request $request) use ($app) {
+  $categories = $app['dao.category']->findAll();
+  //Find articles by categories
+  $articles = $app['dao.article']->findAllByArticle($name);
+  return $app['twig']->render('article.html.twig', array(
+      'articles' => $articles,
+      'categories' => $categories,
 });
