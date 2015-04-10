@@ -117,4 +117,5 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
       'name' => $name,
       'articles' => $articles,
       'categories' => $categories));
-});
+})
+->bind('category');
