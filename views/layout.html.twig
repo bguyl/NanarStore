@@ -21,23 +21,23 @@
                     <a class="navbar-brand" href="/">NanarStore</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
-                    <ul class="nav navbar-nav">	
-					
+                    <ul class="nav navbar-nav">
+
                         {% if app.security.token and is_granted('ROLE_ADMIN') %}
 							<li class="{% if adminMenu is defined %}active{% endif %}"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
 						{% endif %}
-						
+
 						<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Catégories <b class="caret"></b></a>
-                            <ul class="dropdown-menu">                            
+                            <ul class="dropdown-menu">
                                 {% for category in categories %}
-                                    <li><a href="#">{{ category.name }}</a></li>
+                                    <li><a href="{{ path('category', {name: category.name}) }}">{{ category.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
                     </ul>
-					
+
 					<ul class="nav navbar-nav navbar-right">
                         {% if app.security.token and is_granted('IS_AUTHENTICATED_FULLY') %}
                             <li class="dropdown">
@@ -65,7 +65,7 @@
             <a href="https://github.com/bpesquet/OC-MicroCMS">NanarStore</a>, le premier site du net à vendre volontairement autant de mauvais films.
         </footer>
     </div>
-    
+
     <!-- jQuery -->
     <script src="{{ app.request.basepath }}/lib/jquery/jquery.min.js"></script>
     <!-- JavaScript Boostrap plugin -->

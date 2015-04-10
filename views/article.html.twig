@@ -9,7 +9,7 @@
 	<p>{{ article.category }}</p>
 	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
 	<br/> <p class="label label-primary"> {{article.price}}€ </p>
-	
+
     <h3>Comments</h3>
     {% for comment in comments %}
         <strong>{{ comment.author.username }}</strong> said :  {{ comment.content }}<br>
@@ -17,7 +17,7 @@
     {% else %}
         No comments yet.
     {% endfor %}
-	
+
 	<h3>Add a comment</h3>
     {% if commentForm %}
         {{ form_start(commentForm) }}
