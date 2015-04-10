@@ -115,5 +115,5 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
   $articles = $app['dao.article']->findAllByArticle($name);
   return $app['twig']->render('article.html.twig', array(
       'articles' => $articles,
-      'categories' => $categories,
+      'categories' => $categories
 });
