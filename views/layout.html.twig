@@ -22,12 +22,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav">
-
-                        {% if app.security.token and is_granted('ROLE_ADMIN') %}
-							<li class="{% if adminMenu is defined %}active{% endif %}"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
-						{% endif %}
-
-						<li class="dropdown">
+						          <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Categories <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -56,6 +51,10 @@
                                 </ul>
                             </li>
                         {% endif %}
+                        {% if app.security.token and is_granted('ROLE_ADMIN') %}
+                            <li class="{% if adminMenu is defined %}active{% endif %}"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                        {% endif %}
+
                     </ul>
                 </div>
             </div><!-- /.container -->
