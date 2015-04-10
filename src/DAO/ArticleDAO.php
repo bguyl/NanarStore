@@ -55,7 +55,7 @@ class ArticleDAO extends DAO
       $articles = array();
       foreach ($result as $row){
           $articleId = $row['art_id'];
-          $articles[$articlesId] = $this->buildDomainObject($row);
+          $articles[$articleId] = $this->buildDomainObject($row);
       }
 
       if ($articles)
