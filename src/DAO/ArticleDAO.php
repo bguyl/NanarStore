@@ -58,10 +58,7 @@ class ArticleDAO extends DAO
           $articles[$articleId] = $this->buildDomainObject($row);
       }
 
-      if ($articles)
-          return $articles;
-      else
-          throw new \Exception("No article matching category " . $name);
+      return $articles;
 
     }
 
