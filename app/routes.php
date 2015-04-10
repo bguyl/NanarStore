@@ -112,7 +112,7 @@ $app->get('/admin/article/{id}/delete', function($id, Request $request) use ($ap
 $app->get('/category/{name}', function($name, Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
   //Find articles by categories
-  $articles = $app['dao.article']->findAllByCategory($name);
+  $articles = $app['dao.article']->findByCategory($name);
   return $app['twig']->render('article.html.twig', array(
       'articles' => $articles,
       'categories' => $categories));
