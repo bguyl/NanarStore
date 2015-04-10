@@ -27,8 +27,9 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Content</th>
+                        <th>Description</th>
 						<th>Category</th>
+						<th>Price</th>
                         <th></th>  <!-- Actions column -->
                     </tr>
                 </thead>
@@ -37,6 +38,7 @@
                     <td><a class="articleTitle" href="/article/{{ article.id }}">{{ article.title }}</a></td>
                     <td>{{ article.description | truncate(60) }}</td>
 					<td>{{ article.category | truncate(60) }}</td>
+					<td>{{ article.price | truncate(60) }}</td>
                     <td>
                         <a href="/admin/article/{{ article.id }}/edit" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                         <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><span class="glyphicon glyphicon-remove"></span>

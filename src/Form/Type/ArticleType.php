@@ -11,10 +11,10 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title', 'text')
-            ->add('description', 'textarea');
-			->add('category', 'textarea');
-			->add('image', 'textarea');
-			->add('price', 'textarea');
+            ->add('description', 'textarea')
+			->add('category', 'text')
+			->add('image', 'text')
+			->add('price', 'text');
     }
 
     public function getName()

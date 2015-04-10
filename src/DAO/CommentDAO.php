@@ -35,7 +35,8 @@ class CommentDAO extends DAO
         $commentData = array(
             'art_id' => $comment->getArticle()->getId(),
             'usr_id' => $comment->getAuthor()->getId(),
-            'com_content' => $comment->getContent()
+            'com_content' => $comment->getContent(),
+			'com_grade' => $comment->getGrade()
             );
 
         if ($comment->getId()) {
@@ -49,6 +50,37 @@ class CommentDAO extends DAO
             $comment->setId($id);
         }
     }
+	
+	
+	/**
+     * Removes a comment from the database.
+     *
+     * @param @param integer $id The comment id
+     */
+    public function delete($id) {
+        // Delete the comment
+        $this->getDb()->delete('t_comment', array('com_id' => $id));
+    }
+	
+	
+	
+	/**
+     * Returns a comment matching the supplied id.
+     *
+     * @param integer $id The comment id
+     *
+     * @return \NanarStore\Domain\Comment|throws an exception if no matching comment is found
+     */
+    public function find($id) {
+        $sql = "select * from t_comment where com_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No comment matching id " . $id);
+    }
+	
 	
 	
     /**
@@ -107,6 +139,17 @@ class CommentDAO extends DAO
         $this->getDb()->delete('t_comment', array('art_id' => $articleId));
     }
 
+	
+	/**
+     * Removes all comments for a user
+     *
+     * @param integer $userId The id of the user
+     */
+    public function deleteAllByUser($userId) {
+        $this->getDb()->delete('t_comment', array('usr_id' => $userId));
+    }
+	
+	
 	
     /**
      * Creates an Comment object based on a DB row.
