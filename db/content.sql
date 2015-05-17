@@ -34,3 +34,9 @@ insert into t_comment values
 (2, 'JaneDoe', 'Piou Piou Piou.', 8, 1, 2);
 
 /* Order */
+/* -- JohnDoe orders -- */
+insert into t_order values (1, 1, 34);
+insert into t_order values (1, 2, 21);
+/* -- JaneDoe orders -- */
+insert into t_order values (2, 3, 10);
+insert into t_order values (2, 1, 6);
