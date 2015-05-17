@@ -32,3 +32,5 @@ insert into t_comment values
 (1, 'JohnDoe', 'Le film de toute une vie', 14, 1, 1);
 insert into t_comment values
 (2, 'JaneDoe', 'Piou Piou Piou.', 8, 1, 2);
+
+/* Order */

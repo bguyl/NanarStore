@@ -11,7 +11,7 @@ create table t_article (
     art_id integer not null primary key auto_increment,
     art_title varchar(100) not null,
     art_description varchar(2000) not null,
-    art_category varchar(100) not null, 
+    art_category varchar(100) not null,
     foreign key (art_category) references t_category(cat_name),
     art_image varchar(100) not null,
     art_price float not null
@@ -22,7 +22,16 @@ create table t_user (
     usr_name varchar(50) not null,
     usr_password varchar(88) not null,
     usr_salt varchar(23) not null,
-    usr_role varchar(50) not null 
+    usr_role varchar(50) not null
+) engine=innodb character set utf8 collate utf8_unicode_ci;
+
+create table t_order (
+    ord_usr integer not null,
+    foreign key (ord_usr) references t_user(usr_id),
+    ord_art integer not null,
+    foreign key (ord_art) references t_article(art_id),
+    ord_qt integer,
+    primary key (ord_usr, ord_art)
 ) engine=innodb character set utf8 collate utf8_unicode_ci;
 
 create table t_comment (
