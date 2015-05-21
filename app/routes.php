@@ -211,4 +211,4 @@ $app->get('/basket/{id}', function($id, Request $request) use ($app) {
       'id' => $id,
       'order' => $order,
       'categories' => $categories));
-})
+});
