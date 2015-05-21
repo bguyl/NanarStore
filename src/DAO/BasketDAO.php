@@ -13,7 +13,7 @@ class BasketDAO extends DAO
      */
     public function find($user) {
         $sql = "select * from t_order where ord_usr=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($user));
+        $result = $this->getDb()->fetchAssoc($sql, array($user));
 
         // Convert query result to an array of domain objects
         if(!$row)
@@ -27,7 +27,7 @@ class BasketDAO extends DAO
         return $basket;
     }
 
-    protected function buildBasket($row){
+    protected function buildDomainObject($row){
         $basket = new Basket();
     }
 }

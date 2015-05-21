@@ -10,7 +10,7 @@ use NanarStore\Domain\User;
 
 class UserDAO extends DAO implements UserProviderInterface
 {
-	
+
     /**
      * Returns a list of all users, sorted by role and name.
      *
@@ -28,8 +28,8 @@ class UserDAO extends DAO implements UserProviderInterface
         }
         return $entities;
     }
-	
-		
+
+
     /**
      * Returns a user matching the supplied id.
      *
@@ -81,7 +81,7 @@ class UserDAO extends DAO implements UserProviderInterface
         return 'NanarStore\Domain\User' === $class;
     }
 
-	
+
 	/**
      * Saves a user into the database.
      *
@@ -106,7 +106,7 @@ class UserDAO extends DAO implements UserProviderInterface
             $user->setId($id);
         }
     }
-	
+
 	/**
      * Removes a user from the database.
      *
@@ -116,8 +116,8 @@ class UserDAO extends DAO implements UserProviderInterface
         // Delete the user
         $this->getDb()->delete('t_user', array('usr_id' => $id));
     }
-	
-	
+
+
     /**
      * Creates a User object based on a DB row.
      *

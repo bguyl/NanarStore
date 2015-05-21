@@ -104,7 +104,7 @@ class ArticleDAO extends DAO
      * @param array $row The DB row containing Article data.
      * @return \NanarStore\Domain\Article
      */
-    protected function buildArticle($row) {
+    protected function buildDomainObject($row) {
         $article = new Article();
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);

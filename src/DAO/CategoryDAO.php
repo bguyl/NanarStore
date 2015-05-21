@@ -43,7 +43,7 @@ class CategoryDAO extends DAO
             throw new \Exception("No category matching name " . $name);
     }
 
-    protected function buildCategory($row) {
+    protected function buildDomainObject($row) {
         $category = new Category();
         $category->setName($row['cat_name']);
         return $category;
