@@ -148,7 +148,7 @@ $app->match('/admin/user/add', function(Request $request) use ($app) {
         $encoder = $app['security.encoder.digest'];
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password); 
+        $user->setPassword($password);
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
     }
@@ -170,7 +170,7 @@ $app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) 
         $encoder = $app['security.encoder_factory']->getEncoder($user);
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password); 
+        $user->setPassword($password);
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
     }
@@ -190,7 +190,7 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     return $app->redirect('/admin');
 });
 
-// Categore page
+// Category page
 $app->get('/category/{name}', function($name, Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
   //Find articles by categories
@@ -198,6 +198,18 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
   return $app['twig']->render('category.html.twig', array(
       'name' => $name,
       'articles' => $articles,
+      'categories' => $categories));
+})
+->bind('category');
+
+// Basket page
+$app->get('/basket/{id}', function($id, Request $request) use ($app) {
+  $categories = $app['dao.category']->findAll();
+  //Find the order
+  $order = $app['dao.order']->find($id, $id);
+  return $app['twig']->render('basket.html.twig', array(
+      'id' => $id,
+      'order' => $order,
       'categories' => $categories));
 })
 ->bind('category');

@@ -52,7 +52,7 @@ $app['dao.article'] = $app->share(function($app) {
 $app['dao.user'] = $app->share(function ($app) {
     return new NanarStore\DAO\UserDAO($app['db']);
 });
-	
+
 $app['dao.comment'] = $app->share(function($app) {
     $commentDAO = new NanarStore\DAO\CommentDAO($app['db']);
     $commentDAO->setArticleDAO($app['dao.article']);
@@ -62,4 +62,8 @@ $app['dao.comment'] = $app->share(function($app) {
 
 $app['dao.category'] = $app->share(function($app) {
     return new NanarStore\DAO\CategoryDAO($app['db']);
+});
+
+$app['dao.order'] = $app->share(function($app) {
+    return new NanarStore\DAO\OrderDAO($app['db']);
 });
