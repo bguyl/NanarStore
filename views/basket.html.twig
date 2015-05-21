@@ -8,10 +8,9 @@
     <td><em>Prix</em></td>
     <td><em>Quantité</em></td>
   </tr>
-  {% for article in articles %}
   <tr>
-    <td>{{ article.name }}</td>
-    <td>{{ article.price }}</td>
-    <td>{{ article.quantity }}</td>
+    <td>{{ order.userId }}</td>
+    <td>{{ order.articleId }}</td>
+    <td>{{ order.quantity }}</td>
   </tr>
 </table>
