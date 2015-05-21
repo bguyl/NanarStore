@@ -212,4 +212,3 @@ $app->get('/basket/{id}', function($id, Request $request) use ($app) {
       'order' => $order,
       'categories' => $categories));
 })
-->bind('category');
