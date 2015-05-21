@@ -22,7 +22,7 @@ class BasketDAO extends DAO
         $basket = array();
         foreach ($result as $row) {
             $orderId = $row['ord_art'];
-            $basket[$orderId] = $this->buildBasket($row);
+            $basket[$orderId] = $this->buildDomainObject($row);
         }
         return $basket;
     }

@@ -19,7 +19,7 @@ class CategoryDAO extends DAO
         $categories = array();
         foreach ($result as $row) {
             $categoryName = $row['cat_name'];
-            $categories[$categoryName] = $this->buildCategory($row);
+            $categories[$categoryName] = $this->buildDomainObject($row);
         }
         return $categories;
 
@@ -38,7 +38,7 @@ class CategoryDAO extends DAO
         $row = $this->getDb()->fetchAssoc($sql, array($name));
 
         if ($row)
-            return $this->buildCategory($row);
+            return $this->buildDomainObject($row);
         else
             throw new \Exception("No category matching name " . $name);
     }

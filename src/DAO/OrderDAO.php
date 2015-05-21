@@ -20,7 +20,7 @@ class OrderDAO extends DAO
         $result = $this->getDb()->fetchAssoc($sql, array($user), array($article));
 
         if ($row)
-            return $this->buildOrder($row);
+            return $this->buildDomainObject($row);
         else
             throw new \Exception("No order matching user/article " . $user . $article);
     }

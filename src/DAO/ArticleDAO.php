@@ -19,7 +19,7 @@ class ArticleDAO extends DAO
         $articles = array();
         foreach ($result as $row) {
             $articleId = $row['art_id'];
-            $articles[$articleId] = $this->buildArticle($row);
+            $articles[$articleId] = $this->buildDomainObject($row);
         }
         return $articles;
     }
@@ -36,7 +36,7 @@ class ArticleDAO extends DAO
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
         if ($row)
-            return $this->buildArticle($row);
+            return $this->buildDomainObject($row);
         else
             throw new \Exception("No article matching id " . $id);
     }
@@ -55,7 +55,7 @@ class ArticleDAO extends DAO
       $articles = array();
       foreach ($result as $row){
           $articleId = $row['art_id'];
-          $articles[$articleId] = $this->buildArticle($row);
+          $articles[$articleId] = $this->buildDomainObject($row);
       }
 
       return $articles;
