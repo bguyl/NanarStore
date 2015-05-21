@@ -62,7 +62,7 @@ class OrderDAO extends DAO
      * @param array $row The DB row containing Order data.
      * @return \NanarStore\Domain\Order
      */
-    protected function buildDomainObject(array $row) {
+    protected function buildDomainObject($row) {
         $order = new Order();
         $order->setArticleId($row['ord_art']);
         $order->setUserId($row['ord_usr']);
