@@ -38,7 +38,7 @@ class OrderDAO extends DAO
             );
 
         if ($order->isSaved()) {
-          $this->getDb()->update('t_order', $orderData, array('ord_usr' => $order->getUserId(), 'ord_art'=> $order->getArticleId());)
+          $this->getDb()->update('t_order', $orderData, array('ord_usr' => $order->getUserId(), 'ord_art'=> $order->getArticleId()));
         }
         else{
           $this->getDb()->insert('t_order', $orderData);
