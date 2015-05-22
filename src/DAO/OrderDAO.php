@@ -19,8 +19,8 @@ class OrderDAO extends DAO
         $sql = "select * from t_order where ord_usr=? and ord_art=?";
         $result = $this->getDb()->fetchAssoc($sql, array($user, $article));
 
-        if ($row)
-            return $this->buildDomainObject($row);
+        if ($result)
+            return $this->buildDomainObject($result);
         else
             throw new \Exception("No order matching user/article " . $user . $article);
     }
