@@ -175,7 +175,7 @@ $app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) 
         $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
     }
     return $app['twig']->render('user_form.html.twig', array(
-		'categories' => $categories,
+		    'categories' => $categories,
         'title' => 'Edit user',
         'userForm' => $userForm->createView()));
 });
@@ -206,9 +206,9 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
 $app->get('/basket', function(Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
   //Get the current user
-  $userId = $app['security']->getToken()->getUser().getId();
+  $user = $app['security']->getToken()->getUser();
   if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
-    //$userId = $user.getId();
+    $userId = $user->getId();
     $order = $app['dao.order']->find($userId, 1);
   }
   else{
