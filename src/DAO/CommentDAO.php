@@ -4,28 +4,28 @@ namespace NanarStore\DAO;
 
 use NanarStore\Domain\Comment;
 
-class CommentDAO extends DAO 
+class CommentDAO extends DAO
 {
     /**
      * @var \NanarStore\DAO\ArticleDAO
      */
     private $articleDAO;
-	
+
 	/**
      * @var \NanarStore\DAO\UserDAO
      */
     private $userDAO;
-	
+
 
     public function setArticleDAO(ArticleDAO $articleDAO) {
         $this->articleDAO = $articleDAO;
     }
-	
+
 	public function setUserDAO($userDAO) {
         $this->userDAO = $userDAO;
     }
-	
-	
+
+
 	/**
      * Saves a comment into the database.
      *
@@ -35,7 +35,8 @@ class CommentDAO extends DAO
         $commentData = array(
             'art_id' => $comment->getArticle()->getId(),
             'usr_id' => $comment->getAuthor()->getId(),
-            'com_content' => $comment->getContent()
+            'com_content' => $comment->getContent(),
+			      'com_grade' => $comment->getGrade()
             );
 
         if ($comment->getId()) {
@@ -49,8 +50,39 @@ class CommentDAO extends DAO
             $comment->setId($id);
         }
     }
-	
-	
+
+
+	/**
+     * Removes a comment from the database.
+     *
+     * @param @param integer $id The comment id
+     */
+    public function delete($id) {
+        // Delete the comment
+        $this->getDb()->delete('t_comment', array('com_id' => $id));
+    }
+
+
+
+	/**
+     * Returns a comment matching the supplied id.
+     *
+     * @param integer $id The comment id
+     *
+     * @return \NanarStore\Domain\Comment|throws an exception if no matching comment is found
+     */
+    public function find($id) {
+        $sql = "select * from t_comment where com_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No comment matching id " . $id);
+    }
+
+
+
     /**
      * Return a list of all comments for an article, sorted by date (most recent last).
      *
@@ -78,8 +110,8 @@ class CommentDAO extends DAO
         }
         return $comments;
     }
-	
-	
+
+
 	/**
      * Returns a list of all comments, sorted by date (most recent first).
      *
@@ -97,7 +129,7 @@ class CommentDAO extends DAO
         }
         return $entities;
     }
-	
+
 	/**
      * Removes all comments for an article
      *
@@ -107,7 +139,18 @@ class CommentDAO extends DAO
         $this->getDb()->delete('t_comment', array('art_id' => $articleId));
     }
 
-	
+
+	/**
+     * Removes all comments for a user
+     *
+     * @param integer $userId The id of the user
+     */
+    public function deleteAllByUser($userId) {
+        $this->getDb()->delete('t_comment', array('usr_id' => $userId));
+    }
+
+
+
     /**
      * Creates an Comment object based on a DB row.
      *
@@ -119,14 +162,14 @@ class CommentDAO extends DAO
         $comment->setId($row['com_id']);
         $comment->setContent($row['com_content']);
 		$comment->setGrade($row['com_grade']);
-		
+
         if (array_key_exists('art_id', $row)) {
             // Find and set the associated article
             $articleId = $row['art_id'];
             $article = $this->articleDAO->find($articleId);
             $comment->setArticle($article);
         }
-		
+
 		if (array_key_exists('usr_id', $row)) {
             // Find and set the associated author
             $userId = $row['usr_id'];
@@ -134,7 +177,7 @@ class CommentDAO extends DAO
             $comment->setAuthor($user);
         }
 
-        
+
         return $comment;
     }
 }

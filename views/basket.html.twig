@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+<h1>Votre panier</h1>
+
+<table class="table table-striped">
+  <tr>
+    <td><em>Nom du produit</em></td>
+    <td><em>Prix</em></td>
+    <td><em>Quantité</em></td>
+  </tr>
+  <tr>
+    <td>{{ order.userId }}</td>
+    <td>{{ order.articleId }}</td>
+    <td>{{ order.quantity }}</td>
+  </tr>
+</table>

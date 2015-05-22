@@ -41,6 +41,27 @@ class ArticleDAO extends DAO
             throw new \Exception("No article matching id " . $id);
     }
 
+    /**
+      * Returns articles matching with the supplied category.
+      *
+      * @param integer $name
+      *
+      * @return \NanarStore\Domain\Article|throws an exception if no matching article is found
+      */
+    public function findByCategory($name){
+      $sql = "select * from t_article where art_category=?";
+      $result = $this->getDb()->fetchAll($sql, array($name));
+
+      $articles = array();
+      foreach ($result as $row){
+          $articleId = $row['art_id'];
+          $articles[$articleId] = $this->buildDomainObject($row);
+      }
+
+      return $articles;
+
+    }
+
 	/**
      * Saves an article into the database.
      *
@@ -77,23 +98,6 @@ class ArticleDAO extends DAO
         $this->getDb()->delete('t_article', array('art_id' => $id));
     }
 
-    /**
-     * Creates an Article object based on a DB row.
-     *
-     * @param array $row The DB row containing Article data.
-     * @return \NanarStore\Domain\Article
-     */
-    private function buildArticle(array $row) {
-        $article = new Article();
-        $article->setId($row['art_id']);
-        $article->setTitle($row['art_title']);
-        $article->setDescription($row['art_description']);
-		$article->setCategory($row['art_category']);
-		$article->setImage($row['art_image']);
-		$article->setPrice($row['art_price']);
-        return $article;
-    }
-
 	 /**
      * Creates an Article object based on a DB row.
      *
@@ -105,9 +109,9 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setDescription($row['art_description']);
-		$article->setCategory($row['art_category']);
-		$article->setImage($row['art_image']);
-		$article->setPrice($row['art_price']);
+    		$article->setCategory($row['art_category']);
+    		$article->setImage($row['art_image']);
+    		$article->setPrice($row['art_price']);
         return $article;
     }
 }
