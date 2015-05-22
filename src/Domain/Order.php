@@ -37,8 +37,8 @@ class Order
         return $this->userId;
     }
 
-    public function setUserId($user) {
-        $this->user = $userId;
+    public function setUserId($userId) {
+        $this->userId = $userId;
     }
 
     public function getQuantity() {
