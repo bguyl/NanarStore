@@ -203,10 +203,12 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
 ->bind('category');
 
 // Basket page
-$app->get('/basket/{id}', function($id, Request $request) use ($app) {
+$app->get('/basket', function($id, Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
+  //Get the current user
+  $user = $app['security']->getToken()->getUser();
   //Find the order
-  $order = $app['dao.order']->find($id, $id);
+  $order = $app['dao.order']->find($user.getId(), 1);
   return $app['twig']->render('basket.html.twig', array(
       'id' => $id,
       'order' => $order,
