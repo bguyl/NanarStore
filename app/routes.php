@@ -206,9 +206,9 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
 $app->get('/basket', function(Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
   //Get the current user
-  $user = $app['security']->getToken()->getUser();
+  $userId = $app['security']->getToken()->getUser().getId();
   if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
-    $userId = $user.getId();
+    //$userId = $user.getId();
     $order = $app['dao.order']->find($userId, 1);
   }
   else{
