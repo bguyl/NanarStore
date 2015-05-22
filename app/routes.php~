@@ -12,8 +12,8 @@ $app->get('/', function () use ($app) {
     $categories = $app['dao.category']->findAll();
     return $app['twig']->render('index.html.twig', array('articles' => $articles, 'categories' => $categories));
 
-});
-
+});	
+	
 // Article details with comments
 $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     $article = $app['dao.article']->find($id);
@@ -35,7 +35,7 @@ $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     }
     $comments = $app['dao.comment']->findAllByArticle($id);
     return $app['twig']->render('article.html.twig', array(
-        'article' => $article,
+        'article' => $article, 
         'categories' => $categories,
         'comments' => $comments,
         'commentForm' => $commentFormView));
