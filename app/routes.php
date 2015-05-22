@@ -210,7 +210,6 @@ $app->get('/basket', function($id, Request $request) use ($app) {
   //Find the order
   $order = $app['dao.order']->find($user.getId(), 1);
   return $app['twig']->render('basket.html.twig', array(
-      'id' => $id,
       'order' => $order,
       'categories' => $categories));
 });
