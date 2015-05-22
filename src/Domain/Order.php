@@ -33,12 +33,12 @@ class Order
         $this->articleId = $articleId;
     }
 
-    public function getUser() {
-        return $this->user;
+    public function getUserId() {
+        return $this->userId;
     }
 
-    public function setUser(User $user) {
-        $this->user = $user;
+    public function setUserId($user) {
+        $this->user = $userId;
     }
 
     public function getQuantity() {
