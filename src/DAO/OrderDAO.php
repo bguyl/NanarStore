@@ -16,7 +16,7 @@ class OrderDAO extends DAO
      * @return \NanarStore\Domain\Order|throws an exception if no matching order is found
      */
     public function find($user, $article) {
-        $sql = "select * from t_oder where ord_usr=? and ord_art=?";
+        $sql = "select * from t_order where ord_usr=? and ord_art=?";
         $result = $this->getDb()->fetchAssoc($sql, array($user, $article));
 
         if ($row)
