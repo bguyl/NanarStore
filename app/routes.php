@@ -208,8 +208,7 @@ $app->get('/basket', function(Request $request) use ($app) {
   //Get the current user
   $user = $app['security']->getToken()->getUser();
   //Find the order
-  $val1 = $user.getId();
-  $order = $app['dao.order']->find($val1, 1);
+  $order = $app['dao.order']->find(1, 1);
   return $app['twig']->render('basket.html.twig', array(
       'order' => $order,
       'categories' => $categories));
