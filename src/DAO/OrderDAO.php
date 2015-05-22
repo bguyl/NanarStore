@@ -17,7 +17,7 @@ class OrderDAO extends DAO
      */
     public function find($user, $article) {
         $sql = "select * from t_oder where ord_usr=? and ord_art=?";
-        $result = $this->getDb()->fetchAssoc($sql, array($user), array($article));
+        $result = $this->getDb()->fetchAssoc($sql, array($user, $article));
 
         if ($row)
             return $this->buildDomainObject($row);
