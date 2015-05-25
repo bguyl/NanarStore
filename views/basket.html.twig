@@ -9,10 +9,12 @@
     <td><em>Prix</em></td>
     <td><em>Quantité</em></td>
   </tr>
+  {% for order in orders %}
   <tr>
-    <td>{{ order.userId }}</td>
-    <td>{{ order.articleId }}</td>
-    <td>{{ order.quantity }}</td>
+      <td>{{ order.userId }}</td>
+      <td>{{ order.articleId }}</td>
+      <td>{{ order.quantity }}</td>
   </tr>
+  {% endfor %}
 </table>
 {% endblock %}

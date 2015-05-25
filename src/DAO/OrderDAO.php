@@ -25,6 +25,27 @@ class OrderDAO extends DAO
             throw new \Exception("No order matching user/article " . $user . $article);
     }
 
+   /**
+     * Return all the orders matching the supplied user id.
+     * @param integer $user
+     *
+     * @return array All the order from the user
+     */
+
+    public function findAll($user){
+        $sql = "select * from t_order where ord_usr=? order by ord_art";
+        $result = $this->getDb()->fetchAssoc($sql, array($user));
+
+        $orders = array();
+        foreach ($result as $row) {
+            $orderId = $row['ord_art'];
+            $oders[$orderId] = $this->buildDomainObject($row);
+        }
+
+        return $orders;
+
+    }
+
 	/**
      * Saves an order into the database.
      *

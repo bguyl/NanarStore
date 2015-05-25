@@ -22,7 +22,7 @@ class ArticleDAO extends DAO
             $articles[$articleId] = $this->buildDomainObject($row);
         }
         return $articles;
-    }
+    }  
 
 	 /**
      * Returns an article matching the supplied id.

@@ -209,13 +209,14 @@ $app->get('/basket', function(Request $request) use ($app) {
   $user = $app['security']->getToken()->getUser();
   if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
     $userId = $user->getId();
-    $order = $app['dao.order']->find($userId, 1);
+    $orders = array();
+    $orders = $app['dao.order']->findAll($userId);
   }
   else{
     //Find the order
-    $order = $app['dao.order']->find(1, 1);
+    $orders = $app['dao.order']->find(1, 1);
   }
   return $app['twig']->render('basket.html.twig', array(
-      'order' => $order,
+      'orders' => $orders,
       'categories' => $categories));
 });
