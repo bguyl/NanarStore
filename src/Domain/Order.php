@@ -25,6 +25,12 @@ class Order
      */
     private $quantity;
 
+    /**
+      * Is saved in database ?
+      * @var boolean
+      */
+    private $saved = false;
+
     public function getArticleId() {
         return $this->articleId;
     }
@@ -47,5 +53,13 @@ class Order
 
     public function setQuantity($quantity) {
         $this->quantity = $quantity;
+    }
+
+    public function isSaved(){
+        return $this->saved;
+    }
+
+    public function setSaved($bool){
+        $this->saved = $bool;
     }
 }

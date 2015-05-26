@@ -19,10 +19,18 @@ class OrderDAO extends DAO
         $sql = "select * from t_order where ord_usr=? and ord_art=?";
         $result = $this->getDb()->fetchAssoc($sql, array($user, $article));
 
-        if ($result)
-            return $this->buildDomainObject($result);
-        else
-            throw new \Exception("No order matching user/article " . $user . $article);
+        if ($result){
+            $order = $this->buildDomainObject($result);
+            $order->setSaved(true);
+            return $order;
+        }
+        else{
+          $order = new Order();
+          $order->setArticleId($article);
+          $order->setUserId($user);
+          $order->setQuantity(1);
+          return $order;
+        }
     }
 
    /**
@@ -34,17 +42,40 @@ class OrderDAO extends DAO
 
     public function findAll($user){
         $sql = "select * from t_order where ord_usr=? order by ord_art";
-        $result = $this->getDb()->fetchAssoc($sql, array($user));
+        $result = $this->getDb()->fetchAll($sql, array($user));
 
         $orders = array();
         foreach ($result as $row) {
             $orderId = $row['ord_art'];
             $oders[$orderId] = $this->buildDomainObject($row);
+            $oders[$orderId]->setSaved(true);
         }
 
         return $orders;
-
     }
+
+
+    /**
+       * Saves an order into the database.
+       *
+       * @param \NanarStore\Domain\Order $order The order to save
+       */
+      public function addItem(Order $order) {
+          $orderData = array(
+              'ord_usr' => $order->getUserId(),
+              'ord_art' => $order->getArticleId(),
+  			      'ord_qt' => $order->getQuantity(),
+              );
+
+          if ($order->isSaved()) {
+            $orderData['ord_qt']++;
+            $this->getDb()->update('t_order', $orderData, array('ord_usr' => $order->getUserId(), 'ord_art'=> $order->getArticleId()));
+          }
+          else{
+            $this->getDb()->insert('t_order', $orderData);
+            $order->setSaved(true);
+          }
+      }
 
 	/**
      * Saves an order into the database.
