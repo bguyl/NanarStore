@@ -46,9 +46,9 @@ class OrderDAO extends DAO
 
         $orders = array();
         foreach ($result as $row) {
-            $orderId = $row['ord_art'];
-            $oders[$orderId] = $this->buildDomainObject($row);
-            $oders[$orderId]->setSaved(true);
+            $orderArt = $row['ord_art'];
+            $orders[$orderArt] = $this->buildDomainObject($row);
+            $orders[$orderArt]->setSaved(true);
         }
 
         return $orders;

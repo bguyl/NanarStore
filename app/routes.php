@@ -216,11 +216,16 @@ $app->get('/basket', function(Request $request) use ($app) {
   if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
     $userId = $user->getId();
     $orders = $app['dao.order']->findAll($userId);
+    $articles = array();
+    foreach ($orders as $order){
+      $articles[$order->getArticleId()] = $app['dao.article']->find($order->getArticleId());
+    }
   }
   return $app['twig']->render('basket.html.twig', array(
       'orders' => $orders,
+      'articles' => $articles,
       'categories' => $categories));
-});
+})->bind("basket");
 
 // Add item to the basket
 $app->get('/addItem', function(Request $request) use ($app) {
