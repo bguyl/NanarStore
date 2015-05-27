@@ -21,6 +21,11 @@
       <td>{{ article.price }}</td>
       <td>{{ orders[article.id].quantity }}</td>
       <td>{{ article.price * orders[article.id].quantity }}</td>
+      <td>
+        <a href="/basket/addItem?artid={{article.id}}" class="btn btn-success btn-xs" title="Add"><span class="glyphicon glyphicon-plus-sign"></span></a>
+        <a href="/basket/removeItem?artid={{ article.id}}" class="btn btn-danger btn-xs" title="Delete"><span class="glyphicon glyphicon-minus-sign"></span></a>
+
+      </td>
       {% set total = total + article.price * orders[article.id].quantity %}
   </tr>
   {% endfor %}
@@ -30,6 +35,7 @@
     <td></td>
     <td><strong>Total</strong></td>
     <td><strong>{{ total }}</strong></td>
+    <td></td>
   </tr>
 
 </table>

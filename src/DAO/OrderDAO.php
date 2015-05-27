@@ -77,6 +77,29 @@ class OrderDAO extends DAO
           }
       }
 
+
+    /**
+      * Saves an order into the database.
+      *
+      * @param \NanarStore\Domain\Order $order The order to save
+      */
+      public function removeItem(Order $order) {
+        $orderData = array(
+          'ord_usr' => $order->getUserId(),
+          'ord_art' => $order->getArticleId(),
+          'ord_qt' => $order->getQuantity(),
+        );
+
+        if ($order->isSaved()) {
+          $orderData['ord_qt']--;
+          if($orderData['ord_qt']<1)
+            $this->getDb()->delete('t_order', array('ord_usr' => $order->getUserId(), 'ord_art'=> $order->getArticleId()));
+          else
+            $this->getDb()->update('t_order', $orderData, array('ord_usr' => $order->getUserId(), 'ord_art'=> $order->getArticleId()));
+        }
+      }
+
+
 	/**
      * Saves an order into the database.
      *

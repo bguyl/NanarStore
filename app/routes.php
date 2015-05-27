@@ -298,3 +298,25 @@ $app->get('/addItem', function(Request $request) use ($app) {
   }
   return $app->redirect('/article/'.$articleId);
 });
+
+// Add item to basket from basket
+$app->get('/basket/addItem', function(Request $request) use ($app) {
+  $user = $app['security']->getToken()->getUser();
+  $articleId = $request->query->get('artid');
+  if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
+    $order = $app['dao.order']->find($user->getId(), $articleId);
+    $app['dao.order']->addItem($order);
+  }
+  return $app->redirect('/basket');
+});
+
+// Remove item to basket from basket
+$app->get('/basket/removeItem', function(Request $request) use ($app) {
+  $user = $app['security']->getToken()->getUser();
+  $articleId = $request->query->get('artid');
+  if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
+    $order = $app['dao.order']->find($user->getId(), $articleId);
+    $app['dao.order']->removeItem($order);
+  }
+  return $app->redirect('/basket');
+});
