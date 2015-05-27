@@ -86,7 +86,7 @@
                 {% for comment in comments %}
                 <tr>
                     <td><a class="articleTitle" href="/article/{{ comment.article.id }}">{{ comment.article.title }}</a></td>
-                    <td>{{ comment.author.username }}</td>
+                    <td>{{ comment.author.name }}</td>
                     <td>{{ comment.content | truncate(60) }}</td>
 					<td>{{ comment.grade | truncate(60) }}</td>
                     <td>
@@ -127,12 +127,14 @@
                     <tr>
                         <th>Name</th>
                         <th>Role</th>
+                        <th>Email</th>
                         <th></th>  <!-- Actions column -->
                     </tr>
                 </thead>
                 {% for user in users %}
                 <tr>
-                    <td>{{ user.username }}</a></td>
+                    <td>{{ user.name }}</a></td>
+                    <td>{{ user.mail | truncate(60) }}</td>
                     <td>
                         {% if user.role == 'ROLE_ADMIN' %}
                             Admin

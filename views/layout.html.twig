@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav">
 
-                        {% if app.security.token and is_granted('ROLE_ADMIN') %}
+            {% if app.security.token and is_granted('ROLE_ADMIN') %}
 							<li class="{% if adminMenu is defined %}active{% endif %}"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
 						{% endif %}
 
@@ -42,19 +42,20 @@
                         {% if app.security.token and is_granted('IS_AUTHENTICATED_FULLY') %}
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.security.token.user.username }} <b class="caret"></b></a>
+                                <span class="glyphicon glyphicon-user"></span> Bienvenue, {{ app.security.token.user.name }} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ path('logout') }}">Log out</a></li>
+                                    <li><a href="{{ path('editAccount')}}">Modifier mes infos</a></li>
+                                    <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                                 </ul>
                             </li>
                         {% else %}
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
+                                <span class="glyphicon glyphicon-user"></span> Déconnecté <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ path('login') }}">Log in</a></li>
+                                    <li><a href="{{ path('login') }}">Connexion</a></li>
+                                    <li><a href="{{ path('signin') }}">S'inscrire</a></li>
                                 </ul>
-                            </li>
                         {% endif %}
                     </ul>
                 </div>

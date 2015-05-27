@@ -10,7 +10,7 @@ use NanarStore\Domain\User;
 
 class UserDAO extends DAO implements UserProviderInterface
 {
-	
+
     /**
      * Returns a list of all users, sorted by role and name.
      *
@@ -28,8 +28,8 @@ class UserDAO extends DAO implements UserProviderInterface
         }
         return $entities;
     }
-	
-		
+
+
     /**
      * Returns a user matching the supplied id.
      *
@@ -47,18 +47,33 @@ class UserDAO extends DAO implements UserProviderInterface
             throw new \Exception("No user matching id " . $id);
     }
 
+
+    /**
+     * Returns a user matching the supplied mail.
+     *
+     * @param integer $mail The user mail.
+     *
+     * 
+     */
+    public function findByMail($mail) {
+        $sql = "select * from t_user where usr_mail=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($mail));
+
+        return $row;
+        }
+
     /**
      * {@inheritDoc}
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($mail)
     {
-        $sql = "select * from t_user where usr_name=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($username));
+        $sql = "select * from t_user where usr_mail=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($mail));
 
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $mail));
     }
 
     /**
@@ -81,7 +96,7 @@ class UserDAO extends DAO implements UserProviderInterface
         return 'NanarStore\Domain\User' === $class;
     }
 
-	
+
 	/**
      * Saves a user into the database.
      *
@@ -89,10 +104,11 @@ class UserDAO extends DAO implements UserProviderInterface
      */
     public function save(User $user) {
         $userData = array(
-            'usr_name' => $user->getUsername(),
+            'usr_name' => $user->getName(),
             'usr_salt' => $user->getSalt(),
             'usr_password' => $user->getPassword(),
-            'usr_role' => $user->getRole()
+            'usr_role' => $user->getRole(),
+						'usr_mail' => $user->getMail(),
             );
 
         if ($user->getId()) {
@@ -106,7 +122,7 @@ class UserDAO extends DAO implements UserProviderInterface
             $user->setId($id);
         }
     }
-	
+
 	/**
      * Removes a user from the database.
      *
@@ -116,8 +132,8 @@ class UserDAO extends DAO implements UserProviderInterface
         // Delete the user
         $this->getDb()->delete('t_user', array('usr_id' => $id));
     }
-	
-	
+
+
     /**
      * Creates a User object based on a DB row.
      *
@@ -127,10 +143,11 @@ class UserDAO extends DAO implements UserProviderInterface
     protected function buildDomainObject($row) {
         $user = new User();
         $user->setId($row['usr_id']);
-        $user->setUsername($row['usr_name']);
+        $user->setName($row['usr_name']);
         $user->setPassword($row['usr_password']);
         $user->setSalt($row['usr_salt']);
         $user->setRole($row['usr_role']);
+				$user->setMail($row['usr_mail']);
         return $user;
     }
 }

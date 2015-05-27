@@ -10,63 +10,57 @@
     {{ flashMessage }}
 </div>
 {% endfor %}
-{% if form_errors(userForm.password.first) %}
+{% for flashMessage in app.session.flashbag.get('error') %}
 <div class="alert alert-danger">
-    {{ form_errors(userForm.password.first) }}
+    {{ flashMessage }}
+</div>
+{% endfor %}
+{% if form_errors(signinForm.password.first) %}
+<div class="alert alert-danger">
+    {{ form_errors(signinForm.password.first) }}
 </div>
 {% endif %}
 
 <div class="well">
-{{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
+{{ form_start(signinForm, { 'attr': {'class': 'form-horizontal'} }) }}
     <div class="form-group">
-        {{ form_label(userForm.name, null, { 'label_attr':  {
+        {{ form_label(signinForm.name, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.name) }}
-            {{ form_widget(userForm.name, { 'attr':  {
+            {{ form_errors(signinForm.name) }}
+            {{ form_widget(signinForm.name, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.mail, null, { 'label_attr':  {
+        {{ form_label(signinForm.mail, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.mail) }}
-            {{ form_widget(userForm.mail, { 'attr':  {
+            {{ form_errors(signinForm.mail) }}
+            {{ form_widget(signinForm.mail, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.password.first, null, { 'label_attr':  {
+        {{ form_label(signinForm.password.first, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_widget(userForm.password.first, { 'attr':  {
+            {{ form_widget(signinForm.password.first, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.password.second, null, { 'label_attr':  {
+        {{ form_label(signinForm.password.second, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_widget(userForm.password.second, { 'attr':  {
-                'class': 'form-control'
-            }}) }}
-        </div>
-    </div>
-    <div class="form-group">
-        {{ form_label(userForm.role, null, { 'label_attr':  {
-            'class': 'col-sm-5 control-label'
-        }}) }}
-        <div class="col-sm-2">
-            {{ form_errors(userForm.role) }}
-            {{ form_widget(userForm.role, { 'attr':  {
+            {{ form_widget(signinForm.password.second, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
@@ -76,6 +70,6 @@
             <input type="submit" class="btn btn-primary" value="Save" />
         </div>
     </div>
-{{ form_end(userForm) }}
+{{ form_end(signinForm) }}
 </div>
 {% endblock %}

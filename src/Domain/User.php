@@ -18,7 +18,7 @@ class User implements UserInterface
      *
      * @var string
      */
-    private $username;
+    private $name;
 
     /**
      * User password.
@@ -42,6 +42,14 @@ class User implements UserInterface
      */
     private $role;
 
+    /**
+     * Mail.
+     * Values : Mail of the user.
+     *
+     * @var string
+     */
+    private $mail;
+
     public function getId() {
         return $this->id;
     }
@@ -54,11 +62,15 @@ class User implements UserInterface
      * @inheritDoc
      */
     public function getUsername() {
-        return $this->username;
+        return $this->mail;
     }
 
-    public function setUsername($username) {
-        $this->username = $username;
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -92,6 +104,15 @@ class User implements UserInterface
 
     public function setRole($role) {
         $this->role = $role;
+    }
+
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    public function setMail($mail) {
+        $this->mail = $mail;
     }
 
     /**

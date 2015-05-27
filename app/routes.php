@@ -6,7 +6,9 @@ use NanarStore\Domain\Article;
 use NanarStore\Domain\User;
 use NanarStore\Form\Type\CommentType;
 use NanarStore\Form\Type\ArticleType;
+use NanarStore\Form\Type\SigninType;
 use NanarStore\Form\Type\UserType;
+
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -52,6 +54,65 @@ $app->get('/login', function(Request $request) use ($app) {
         'last_username' => $app['session']->get('_security.last_username'),
     ));
 })->bind('login');  // named route so that path('login') works in Twig templates
+
+
+//Registration
+
+$app->match('/signin', function(Request $request) use ($app) {
+	$categories = $app['dao.category']->findAll();
+    $user = new User();
+    $SigninForm = $app['form.factory']->create(new SigninType(), $user);
+    $SigninForm->handleRequest($request);
+    if ($SigninForm->isSubmitted() && $SigninForm->isValid()) {
+        // generate a random salt value
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        $plainPassword = $user->getPassword();
+        // find the default encoder
+        $encoder = $app['security.encoder.digest'];
+        // compute the encoded password
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $user->setPassword($password);
+        $user->setRole('ROLE_USER');
+        if($app['dao.user']->findByMail($user->getMail()))
+        {
+          $app['session']->getFlashBag()->add('error', 'This mail is already in use.');
+        }
+        else{
+          $app['dao.user']->save($user);
+          $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        }
+
+    }
+    return $app['twig']->render('signin_form.html.twig', array(
+		'categories' => $categories,
+        'title' => 'Inscription',
+        'signinForm' => $SigninForm->createView()));
+})->bind('signin');
+
+//Edit Account infos
+
+$app->match('/editAccount', function(Request $request) use ($app) {
+    $id = $app['security']->getToken()->getUser()->getId();
+	  $categories = $app['dao.category']->findAll();
+    $user = $app['dao.user']->find($id);
+    $signinForm = $app['form.factory']->create(new SigninType(), $user);
+    $signinForm->handleRequest($request);
+    if ($signinForm->isSubmitted() && $signinForm->isValid()) {
+        $plainPassword = $user->getPassword();
+        // find the encoder for the user
+        $encoder = $app['security.encoder_factory']->getEncoder($user);
+        // compute the encoded password
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $user->setPassword($password);
+        $app['dao.user']->save($user);
+        $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
+    }
+    return $app['twig']->render('signin_form.html.twig', array(
+		'categories' => $categories,
+        'title' => 'Modifier les informations du compte',
+        'signinForm' => $signinForm->createView()));
+})->bind('editAccount');
 
 
 // Admin home page
@@ -148,7 +209,7 @@ $app->match('/admin/user/add', function(Request $request) use ($app) {
         $encoder = $app['security.encoder.digest'];
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password); 
+        $user->setPassword($password);
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
     }
@@ -170,7 +231,7 @@ $app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) 
         $encoder = $app['security.encoder_factory']->getEncoder($user);
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password); 
+        $user->setPassword($password);
         $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
     }
