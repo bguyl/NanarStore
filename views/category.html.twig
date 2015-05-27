@@ -1,5 +1,4 @@
 {% extends "layout.html.twig" %}
-
 {% block title %}{{ name }}{% endblock %}
 
 {% block content %}
@@ -11,5 +10,12 @@
 	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
 	<br/> <p class="label label-primary"> {{article.price}}€ </p>
 </article>
+{% else %}
+<article>
+  <div class="alert alert-danger" role="alert">
+    <h2>Sorry, there isn't a movie in this category yet !</h2>
+  </div>
+</article>
+
 {% endfor %}
 {% endblock %}

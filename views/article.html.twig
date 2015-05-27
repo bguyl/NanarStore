@@ -10,15 +10,13 @@
 	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
 	<br/> <p class="label label-primary"> {{article.price}}€ </p>
 
-    <h3>Comments</h3>
-    {% for comment in comments %}
-        <strong>{{ comment.author.username }}</strong> said :  {{ comment.content }}<br>
-		Grade : {{ comment.grade }}<br>
-    {% else %}
-        No comments yet.
-    {% endfor %}
+  {% if connected %}
+    <a href="/addItem?artid={{article.id}}">
+        <input class="btn btn-primary" type="submit" value="Ajouter au panier">
+    </a>
+  {% endif %}
 
-	<h3>Add a comment</h3>
+	<h3>Ajouter un commentaire</h3>
     {% if commentForm %}
         {{ form_start(commentForm) }}
             <div class="form-group">
@@ -26,22 +24,22 @@
                 {{ form_widget(commentForm.content, { 'attr':  {
                     'rows': '4',
                     'class': 'form-control',
-                    'placeholder': 'Enter your comment'
+                    'placeholder': 'Entrer votre commentaire'
                 }}) }}
             </div>
-			
+
 			<div class="form-group">
                 {{ form_errors(commentForm.grade) }}
                 {{ form_widget(commentForm.grade, { 'attr':  {
                     'rows': '4',
                     'class': 'form-control',
-                    'placeholder': 'Enter your grade'
+                    'placeholder': 'Enter votre appréciation'
                 }}) }}
             </div>
-			
-			
+
+
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publish comment" />
+                <input type="submit" class="btn btn-primary" value="Envoyer" />
             </div>
         {{ form_end(commentForm) }}
         {% for flashMessage in app.session.flashbag.get('success') %}

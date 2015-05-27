@@ -10,7 +10,7 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', 'textarea');
-		$builder->add('grade', 'text');
+		    $builder->add('grade', 'text');
     }
 
     public function getName()

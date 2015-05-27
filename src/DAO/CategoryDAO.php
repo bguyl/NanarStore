@@ -14,7 +14,7 @@ class CategoryDAO extends DAO
     public function findAll(){
         $sql = "select * from t_category order by cat_name";
         $result = $this->getDb()->fetchAll($sql);
-     
+
         // Convert query result to an array of domain objects
         $categories = array();
         foreach ($result as $row) {
@@ -22,10 +22,10 @@ class CategoryDAO extends DAO
             $categories[$categoryName] = $this->buildDomainObject($row);
         }
         return $categories;
-        
+
     }
-    
-    
+
+
      /**
      * Returns a category matching the supplied name.
      *
@@ -42,7 +42,7 @@ class CategoryDAO extends DAO
         else
             throw new \Exception("No category matching name " . $name);
     }
-    
+
     protected function buildDomainObject($row) {
         $category = new Category();
         $category->setName($row['cat_name']);

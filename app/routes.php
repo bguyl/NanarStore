@@ -4,10 +4,12 @@ use Symfony\Component\HttpFoundation\Request;
 use NanarStore\Domain\Comment;
 use NanarStore\Domain\Article;
 use NanarStore\Domain\User;
+use NanarStore\Domain\Order;
 use NanarStore\Form\Type\CommentType;
 use NanarStore\Form\Type\ArticleType;
 use NanarStore\Form\Type\SigninType;
 use NanarStore\Form\Type\UserType;
+use NanarStore\Form\Type\OrderType;
 
 
 // Home page
@@ -24,6 +26,7 @@ $app->match('/article/{id}', function ($id, Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = $app['security']->getToken()->getUser();
     $commentFormView = null;
+    $connected = null;
     if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')) {
         // A user is fully authenticated : he can add comments
         $comment = new Comment();
@@ -33,16 +36,18 @@ $app->match('/article/{id}', function ($id, Request $request) use ($app) {
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'Your comment was succesfully added.');
+            $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été ajouté.');
         }
         $commentFormView = $commentForm->createView();
+        $connected = true;
     }
     $comments = $app['dao.comment']->findAllByArticle($id);
     return $app['twig']->render('article.html.twig', array(
         'article' => $article,
         'categories' => $categories,
         'comments' => $comments,
-        'commentForm' => $commentFormView));
+        'commentForm' => $commentFormView,
+        'connected' => $connected));
 });
 
 // Login form
@@ -236,7 +241,7 @@ $app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) 
         $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
     }
     return $app['twig']->render('user_form.html.twig', array(
-		'categories' => $categories,
+		    'categories' => $categories,
         'title' => 'Edit user',
         'userForm' => $userForm->createView()));
 });
@@ -251,7 +256,7 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     return $app->redirect('/admin');
 });
 
-// Categore page
+// Category page
 $app->get('/category/{name}', function($name, Request $request) use ($app) {
   $categories = $app['dao.category']->findAll();
   //Find articles by categories
@@ -262,3 +267,34 @@ $app->get('/category/{name}', function($name, Request $request) use ($app) {
       'categories' => $categories));
 })
 ->bind('category');
+
+// Basket page
+$app->get('/basket', function(Request $request) use ($app) {
+  $categories = $app['dao.category']->findAll();
+  //Get the current user
+  $orders = array();
+  $user = $app['security']->getToken()->getUser();
+  if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
+    $userId = $user->getId();
+    $orders = $app['dao.order']->findAll($userId);
+    $articles = array();
+    foreach ($orders as $order){
+      $articles[$order->getArticleId()] = $app['dao.article']->find($order->getArticleId());
+    }
+  }
+  return $app['twig']->render('basket.html.twig', array(
+      'orders' => $orders,
+      'articles' => $articles,
+      'categories' => $categories));
+})->bind("basket");
+
+// Add item to the basket
+$app->get('/addItem', function(Request $request) use ($app) {
+  $user = $app['security']->getToken()->getUser();
+  $articleId = $request->query->get('artid');
+  if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
+    $order = $app['dao.order']->find($user->getId(), $articleId);
+    $app['dao.order']->addItem($order);
+  }
+  return $app->redirect('/article/'.$articleId);
+});

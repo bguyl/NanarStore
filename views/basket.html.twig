@@ -1,0 +1,36 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Panier{% endblock %}
+
+{% block content %}
+<h1>Votre panier</h1>
+
+<table class="table table-striped">
+  <tr>
+    <td><strong><em>Nom du produit</em></strong></td>
+    <td><strong><em>Prix unitaire</em></strong></td>
+    <td><strong><em>Quantité</em></strong></td>
+    <td><strong><em>Prix total</em></strong></td>
+    <td></td>
+  </tr>
+
+  {% set total = 0 %}
+  {% for article in articles %}
+  <tr>
+      <td>{{ article.title }}</td>
+      <td>{{ article.price }}</td>
+      <td>{{ orders[article.id].quantity }}</td>
+      <td>{{ article.price * orders[article.id].quantity }}</td>
+      {% set total = total + article.price * orders[article.id].quantity %}
+  </tr>
+  {% endfor %}
+
+  <tr>
+    <td></td>
+    <td></td>
+    <td><strong>Total</strong></td>
+    <td><strong>{{ total }}</strong></td>
+  </tr>
+
+</table>
+{% endblock %}

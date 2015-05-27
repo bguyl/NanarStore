@@ -22,7 +22,7 @@ class ArticleDAO extends DAO
             $articles[$articleId] = $this->buildDomainObject($row);
         }
         return $articles;
-    }
+    }  
 
 	 /**
      * Returns an article matching the supplied id.
@@ -58,10 +58,7 @@ class ArticleDAO extends DAO
           $articles[$articleId] = $this->buildDomainObject($row);
       }
 
-      if ($articles)
-          return $articles;
-      else
-          throw new \Exception("No article matching category " . $name);
+      return $articles;
 
     }
 
@@ -101,23 +98,6 @@ class ArticleDAO extends DAO
         $this->getDb()->delete('t_article', array('art_id' => $id));
     }
 
-    /**
-     * Creates an Article object based on a DB row.
-     *
-     * @param array $row The DB row containing Article data.
-     * @return \NanarStore\Domain\Article
-     */
-    private function buildArticle(array $row) {
-        $article = new Article();
-        $article->setId($row['art_id']);
-        $article->setTitle($row['art_title']);
-        $article->setDescription($row['art_description']);
-		$article->setCategory($row['art_category']);
-		$article->setImage($row['art_image']);
-		$article->setPrice($row['art_price']);
-        return $article;
-    }
-
 	 /**
      * Creates an Article object based on a DB row.
      *
@@ -129,9 +109,9 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setDescription($row['art_description']);
-		$article->setCategory($row['art_category']);
-		$article->setImage($row['art_image']);
-		$article->setPrice($row['art_price']);
+    		$article->setCategory($row['art_category']);
+    		$article->setImage($row['art_image']);
+    		$article->setPrice($row['art_price']);
         return $article;
     }
 }

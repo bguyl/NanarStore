@@ -1,4 +1,5 @@
 drop table if exists t_comment;
+drop table if exists t_order;
 drop table if exists t_user;
 drop table if exists t_article;
 drop table if exists t_category;
@@ -24,6 +25,15 @@ create table t_user (
     usr_salt varchar(23) not null,
     usr_role varchar(50) not null,
     usr_mail varchar(100) not null unique key
+) engine=innodb character set utf8 collate utf8_unicode_ci;
+
+create table t_order (
+    ord_usr integer not null,
+    foreign key (ord_usr) references t_user(usr_id),
+    ord_art integer not null,
+    foreign key (ord_art) references t_article(art_id),
+    ord_qt integer,
+    primary key (ord_usr, ord_art)
 ) engine=innodb character set utf8 collate utf8_unicode_ci;
 
 create table t_comment (
