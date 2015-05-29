@@ -9,7 +9,7 @@
   <div class="well">
     <p>{{ article.description }}</p>
     <p><strong><a href="/category/{{ article.category }}">{{ article.category }}</a></strong></p>
-    <img src = '{{app.request.basepath}}/img/{{article.image}}'/>
+    <img class="thumbnail" src = '{{app.request.basepath}}/img/{{article.image}}'/>
     <br/> <p class="label label-primary"> {{article.price}}€ </p>
       {% if connected %}
       <br/><br/>
