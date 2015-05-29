@@ -1,21 +1,33 @@
 {% extends "layout.html.twig" %}
-{% block title %}{{ name }}{% endblock %}
+
+{% block title %}Accueil{% endblock %}
 
 {% block content %}
-{% for article in articles %}
-<article>
-    <h2><a class="articleTitle" href="/article/{{ article.id }}">{{ article.title }}</a></h2>
-    <p>{{ article.description }}</p>
-	<p>{{ article.category }}</p>
-	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
-	<br/> <p class="label label-primary"> {{article.price}}€ </p>
-</article>
-{% else %}
-<article>
-  <div class="alert alert-danger" role="alert">
-    <h2>Sorry, there isn't a movie in this category yet !</h2>
+<div class="container">
+  <div class="row">
+    {% for article in articles %}
+    <div class="col-md-4 gallery">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title"><a class="articleTitle" href="/article/{{ article.id }}">{{ article.title }}</a></h2>
+        </div>
+        <div class="panel-body">
+          <p>{{ article.description }}</p>
+      	  <p><strong><a href="/category/{{ article.category }}">{{ article.category }}</a></strong></p>
+      	  <img class="img-thumbnail thumbnail" src="{{app.request.basepath}}/img/{{article.image}}"/>
+      	  <p class="label label-primary"> {{article.price}}€ </p>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <article>
+      <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+          <h2>Désolé, il n'y a pas encore de films dans cette catégorie !</h2>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
   </div>
-</article>
-
-{% endfor %}
+</div>
 {% endblock %}

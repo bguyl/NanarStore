@@ -3,52 +3,60 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block content %}
-<p>
-    <h2>{{ article.title }}</h2>
+
+<div class="article">
+  <h2>{{ article.title }}</h2>
+  <div class="well">
     <p>{{ article.description }}</p>
-	<p>{{ article.category }}</p>
-	<img src = '{{app.request.basepath}}/img/{{article.image}}'/>
-	<br/> <p class="label label-primary"> {{article.price}}€ </p>
+    <p><strong><a href="/category/{{ article.category }}">{{ article.category }}</a></strong></p>
+    <img src = '{{app.request.basepath}}/img/{{article.image}}'/>
+    <br/> <p class="label label-primary"> {{article.price}}€ </p>
+      {% if connected %}
+      <br/><br/>
+      <a href="/addItem?artid={{article.id}}">
+        <input class="btn btn-success" type="submit" value="Ajouter au panier">
+      </a>
+      {% for flashMessage in app.session.flashbag.get('addingSuccess') %}
+        <div class="alert alert-success">
+          {{ flashMessage }}
+        </div>
+      {% endfor %}
+      {% endif %}
 
-  {% if connected %}
-    <a href="/addItem?artid={{article.id}}">
-        <input class="btn btn-primary" type="submit" value="Ajouter au panier">
-    </a>
-  {% endif %}
+    	<h3>Ajouter un commentaire</h3>
+        {% if commentForm %}
+            {{ form_start(commentForm) }}
+                <div class="form-group">
+                    {{ form_errors(commentForm.content) }}
+                    {{ form_widget(commentForm.content, { 'attr':  {
+                        'rows': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Entrer votre commentaire'
+                    }}) }}
+                </div>
 
-	<h3>Ajouter un commentaire</h3>
-    {% if commentForm %}
-        {{ form_start(commentForm) }}
-            <div class="form-group">
-                {{ form_errors(commentForm.content) }}
-                {{ form_widget(commentForm.content, { 'attr':  {
-                    'rows': '4',
-                    'class': 'form-control',
-                    'placeholder': 'Entrer votre commentaire'
-                }}) }}
-            </div>
-
-			<div class="form-group">
-                {{ form_errors(commentForm.grade) }}
-                {{ form_widget(commentForm.grade, { 'attr':  {
-                    'rows': '4',
-                    'class': 'form-control',
-                    'placeholder': 'Enter votre appréciation'
-                }}) }}
-            </div>
+    			<div class="form-group">
+                    {{ form_errors(commentForm.grade) }}
+                    {{ form_widget(commentForm.grade, { 'attr':  {
+                        'rows': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Enter votre appréciation'
+                    }}) }}
+                </div>
 
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Envoyer" />
-            </div>
-        {{ form_end(commentForm) }}
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-    {% else %}
-        <a href="{{ path('login') }} ">Log in</a> to add comments.
-    {% endif %}
-</p>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Envoyer" />
+                </div>
+            {{ form_end(commentForm) }}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <a href="{{ path('login') }} ">Connecter-vous</a> pour ajouter des commentaires.
+        {% endif %}
+  </div>
+</div>
 {% endblock %}

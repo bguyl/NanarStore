@@ -5,15 +5,21 @@ insert into t_category values ('Fantastique');
 insert into t_category values ('Comédie');
 insert into t_category values ('Science-fiction');
 insert into t_category values ('Romance');
+insert into t_category values ('Horreur');
+insert into t_category values ('Hors catégories');
 
 
 /* Article */
 insert into t_article values
-(1, 'Hitman le Cobra', 'Best nanar ever!', 'Action', 'hitman.jpg', 9.99);
+(1, 'Hitman le Cobra', "Après une course effrénée, l'impassible Phillip tue Roger, affreux jeune homme ayant vendu des informations aux japonais. Mike, le frère de Roger, veut se venger de Phillip. Il envoie Bob Blackie et un autre sbire retrouver Phillip.", 'Action', 'hitman_le_cobra.jpg', 9.99);
 insert into t_article values
-(2, 'AlphaForce', 'Random name!', 'Action', 'alpha.jpg', 0.99);
+(2, 'Alpha Force', "In the not too distant future a new team of specially trained government soldiers called an Interception Team contend with the latest hostile alien encounter. When an alien scout ship crashes in eastern Russia, Sean Lambert and his elite force are dispatched to investigate. ", 'Action', 'alpha_force.jpg', 0.99);
 insert into t_article values
-(3, 'Turkish Star Wars', 'Epic!', 'Science-fiction', 'turkish.jpg', 199.99);
+(3, 'Turkish Star Wars', "Murat, pilote de vaisseau spatial, et son coéquipier combattent des extra-terrestres. Ils s'égarent sur une planète, qui sera prise d'assaut par l'Empire Tyrannique. Les impérialistes comptent dominer l'univers grâce à l'intelligence humaine : Ils prennent des cerveaux humains pour constituer un seul cerveau gigantesque. Murat combattra l'Empire et deviendra le très légendaire homme qui sauva le monde.", 'Science-fiction', 'turkish_star_wars.jpg', 19.99);
+insert into t_article values
+(4, 'Crocodile Fury', "Dans un petit village de Thailande, un monstrueux crocodile dévore un à un les habitants... ", 'Hors catégories', 'crocodile_fury.jpg', 0.99);
+insert into t_article values
+(5, 'Blood Freak', "Herschell un motard, rencontre une jeune femme catholique qui lui propose de venir chez elle. Il y fait la connaissance de la soeur de cette dernière qui lui trouve un emploi dans une ferme d'élevage de dindes tenue par son père, un savant fou. Le scientifique et son acolyte vont transformer Herschell en monstre dinde qui va s'attaquer aux dealers et aux consommateurs de drogues... ", 'Horreur', 'blood_freak.jpg', 9.99);
 
 
 /* raw password is 'john' */

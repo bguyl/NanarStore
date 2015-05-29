@@ -1,5 +1,5 @@
 body {
-    padding-top: 40px;
+    padding-top: 70px;
 }
 
 .footer {
@@ -9,10 +9,36 @@ body {
 }
 
 .articleTitle:hover, .articleTitle:focus {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .adminTable {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.thumbnail {
+  width:200px;
+  height: 200px;
+}
+
+.gallery h2{
+  text-align: center;
+}
+
+.gallery img{
+  text-align: center;
+}
+
+.gallery {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.article h2{
+  text-align: center;
+}
+
+.article {
+  text-align: justify;
 }

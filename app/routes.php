@@ -295,6 +295,7 @@ $app->get('/addItem', function(Request $request) use ($app) {
   if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')){
     $order = $app['dao.order']->find($user->getId(), $articleId);
     $app['dao.order']->addItem($order);
+    $app['session']->getFlashBag()->add('addingSuccess', 'Votre article a bien été ajouté au panier.');
   }
   return $app->redirect('/article/'.$articleId);
 });
